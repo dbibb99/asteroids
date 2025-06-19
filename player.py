@@ -20,3 +20,25 @@ class Player(CircleShape):
         points = self.triangle()
         line_width = 2
         pygame.draw.polygon(screen, color=color, points=points, width=line_width)
+
+    def update(self, dt):
+        keys = pygame.key.get_pressed()
+
+        # rotate left if pressing 'a'
+        if keys[pygame.K_a]:
+            self.rotation -= PLAYER_TURN_SPEED * dt
+        # rotate right if pressing 'd'
+        if keys[pygame.K_d]:
+            self.rotation += PLAYER_TURN_SPEED * dt
+
+    def move(self, dt):
+        keys = pygame.key.get_pressed()
+        movement = pygame.Vector2(0,1).rotate(self.rotation)
+
+        # move forward when pressing 'w'
+        if keys[pygame.K_w]:
+            self.position += movement * PLAYER_SPEED * dt
+
+        # move backward when pressing 's'
+        if keys[pygame.K_s]:
+            self.position -= movement * PLAYER_SPEED * dt
