@@ -1,6 +1,7 @@
 import pygame
 from circleshape import CircleShape
 from constants import *
+from shot import Shot
 
 class Player(CircleShape):
     def __init__(self, x, y):
@@ -42,3 +43,13 @@ class Player(CircleShape):
         # move backward when pressing 's'
         if keys[pygame.K_s]:
             self.position -= movement * PLAYER_SPEED * dt
+
+    def shoot(self, dt):
+        keys = pygame.key.get_pressed()
+
+        # fire shot if space bar is pressed
+        if keys[pygame.K_SPACE]:
+            movement = pygame.Vector2(0,1).rotate(self.rotation)
+            position = self.position.copy()
+            new_shot = Shot(position=position)
+            new_shot.velocity = movement * PLAYER_SHOOT_SPEED
